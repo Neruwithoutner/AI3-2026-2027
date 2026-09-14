@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<produtos>
+    <produto>
+        <cabecalho>
+            <preco> </preco>
+            <codigo> </codigo>
+            <designacao> </designacao>
+            <quantidade> </quantidade>
+        </cabecalho>
+    </produto>
+    <fatura>
+        <numero> </numero>
+        <data> </data>
+        <cliente>
+            <nome> </nome>
+            <morada> </morada>
+            <telefone> </telefone>
+        </cliente>
+    </fatura>
+</produtos>
