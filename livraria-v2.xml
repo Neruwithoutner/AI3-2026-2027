@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<bookstore>
+    <book category="acao">
+        <title lang="en">Everyday Italian</title>
+        <author>Giada De Laurentiis</author>
+        <year>2005</year>
+        <price value="30.00"/> <!-- Adicionado o atributo value em price -->
+    </book>
+</bookstore> <!-- This page contains the following errors:
+error on line 10 at column 1: Premature end of data in tag bookstore line 3
+Below is a rendering of the page up to the first error. -->

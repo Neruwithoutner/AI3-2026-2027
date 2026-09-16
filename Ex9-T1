@@ -1,0 +1,27 @@
+1-Qual foi o critério que usou para decidir entre elemento e atributo? Aplique-o ao telefone do cliente e justifique a decisão que tomou.
+
+Decidimos fazer do telefone um elemento pois  é um valor que sempre irá alterar baseado no elemento pai, já um atributo é sempre imutável o que não faria sentido no contexto da questão.
+
+--------------------------
+
+2-Indique um dado da sua fatura que poderia ser atributo e um que não poderia. O que os distingue?
+
+O dado data poderia ser um atributo enquanto o dado produto não poderia. Distingue-se que o dado data teria ocasiões onde iria se repetir, já o produto contem dados complexos(Elementos filhos), e por causa disso não seria capaz de ser um atributo.
+
+--------------------------
+
+3-Um serviço Web recebe a sua fatura e precisa de calcular o total. Esse valor deve estar no ficheiro ou ser calculado por quem o lê? Que argumentos há para cada opção?
+
+É preciso sim calcular o total pelo serviço web, pois em XML não é possivel realizar operações matemáticas. Se fosse colocado como um elemento em xml, acabaria sendo um valor "arbitrário" colocado no arquivo, sem garantias de cálculos, podendo estar incorreto.
+
+--------------------------
+
+4-A sua estrutura permite representar uma fatura sem produtos? E uma fatura com dois clientes? O XML, por si só, impede alguma destas situações?
+
+A nossa estrutura permite sim representar uma fatura sem produtos. Não permite ter 2 clientes. o XML por si só permite ter essas situações, com produtos vazios (elementos vazios) e tendo 2 clientes (parecido com o que fizemos com o produto).
+
+--------------------------
+
+5-Dois colegas resolveram o ponto 1 com hierarquias diferentes e ambos os ficheiros são bem formados. Que problema é que isso levanta a quem tem de escrever o programa que lê estas faturas?
+
+O programa que lerá o XML deixará de funcionar universalmente, o que cancela a principal vantagem da linguagem, que é a padronização.

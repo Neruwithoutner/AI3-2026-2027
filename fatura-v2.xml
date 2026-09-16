@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<fatura>
-    <numero>001</numero>
+<fatura id="001"> <!--Adicionado o número como atributo id em fatura-->
     <data>14/03/2023 </data>
     <produtos>
+        <produto>
+            <cabecalho>
+                <preco>22,00 </preco>
+                <codigo>12345</codigo>
+                <designacao>Produto A</designacao>
+                <quantidade>2</quantidade>
+            </cabecalho>
+        </produto>
         <produto>
             <cabecalho>
                 <preco>3,00 </preco>
                 <codigo>12346</codigo>
                 <designacao>Produto B</designacao>
-            <quantidade>1</quantidade>
+                <quantidade>1</quantidade>
             </cabecalho>
         </produto>
-    </produtos>
+    </produtos>    
     <cliente>
         <nome>Gonçalo</nome>
         <morada>Viseu </morada>
         <telefone>987555435 </telefone>
     </cliente>
 </fatura>
-
