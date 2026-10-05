@@ -1,0 +1,19 @@
+**Na ficha anterior, dois colegas produziram faturas bem formadas com hierarquias diferentes. Um schema resolve esse problema? Quem tem de o escrever, e quando, para que resolva?**
+
+ Sim, achamos que um schema resolve esse problema, porque ele define a estrutura que os documentos XML devem seguir. Assim, mesmo que pessoas diferentes criem os documentos, todos vão ter de respeitar a mesma organização. O schema deve ser criado por quem define como os dados vão ser organizados e, de preferência, antes de os documentos começarem a ser criados e utilizados.
+
+**O Price do produto é um número. Que valores absurdos o seu schema continua a aceitar? O que faria falta para os impedir?**
+
+ No nosso schema definimos o Price como xsd:decimal, por isso garantimos que o valor é um número decimal. Mesmo assim, ele ainda pode aceitar valores que não fazem muito sentido, como um preço negativo ou um valor demasiado alto. Com aquilo que aprendemos nesta ficha, não conseguimos limitar esses valores. Para isso seriam necessárias outras restrições do XSD que ainda não utilizámos.
+
+**Um documento é válido hoje. Amanhã acrescenta-se um elemento novo ao schema, obrigatório. O que acontece a todos os documentos já existentes? Que escolha de multiplicidade teria evitado o problema?**
+
+ Se acrescentarmos um elemento novo e ele for obrigatório, os documentos antigos deixam de ser válidos porque não têm esse elemento. Para evitar esse problema, poderíamos ter colocado o novo elemento como opcional, usando minOccurs="0". Assim, os documentos antigos continuariam válidos mesmo sem terem esse elemento.
+
+**Compare o custo de validar com o custo de não validar: que erros passam a ser detetados no momento certo, e que trabalho é que isso poupa a quem escreve o programa leitor?**
+
+ Na nossa opinião, validar dá algum trabalho porque temos de criar o schema e garantir que ele está correto, mas depois acaba por facilitar bastante. A validação consegue encontrar logo alguns erros, como elementos em falta, elementos na ordem errada ou valores com um tipo incorreto. Sem validação, quem cria o programa que lê o XML teria de fazer essas verificações manualmente. Por isso, validar ajuda a encontrar os problemas mais cedo e poupa trabalho no programa leitor.
+
+**O mixed="true" permite texto livre entre os elementos. Que tipo de documentos ficaria impossível de especificar sem esse mecanismo? Dê um exemplo diferente do desta ficha.**
+
+ O mixed="true" é útil quando queremos ter texto normal misturado com elementos XML. Sem ele, seria difícil representar documentos que têm bastante texto corrido e apenas algumas partes marcadas. Um exemplo seria uma carta, onde podemos ter o texto da carta normalmente e usar elementos XML para marcar o nome da pessoa, uma data ou alguma referência. Assim, o texto pode ser livre, mas esses elementos continuam a seguir as regras definidas no schema.

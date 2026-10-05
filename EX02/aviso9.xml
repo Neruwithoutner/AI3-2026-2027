@@ -1,0 +1,12 @@
+<aviso xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="aviso.xsd">
+ Aviso importante ao aluno <nome>Manuel Dias</nome>: o trabalho
+ número <numerotrabalho>1032</numerotrabalho> deverá ser entregue em
+ <dataentrega>2026-10-13</dataentrega>. Em caso de dúvida contacte
+ <email>secretaria@estgv.pt</email>
+<telefone>232480500</telefone>
+<email>apoio@estgv.pt</email> 
+</aviso>
+
+<!-- A choice tem maxOccurs="2", portanto a terceira
+escolha viola o schema. -->
