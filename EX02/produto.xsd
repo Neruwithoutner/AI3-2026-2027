@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
- <xsd:element name="Product">
- <xsd:complexType>
- <xsd:sequence>
- <xsd:element name="ProductName" type="xsd:string"/>
- <xsd:element name="ProductType" type="xsd:string"/>
- <xsd:element name="Price" type="xsd:decimal"/>
- <xsd:element name="Class" type="xsd:string"/>
- <xsd:element name="Company" type="xsd:string"/>
- <xsd:element name="Provider" minOccurs="0" maxOccurs="3">
- <xsd:complexType>
- <xsd:sequence>
- <xsd:element name="Name" type="xsd:string"/>
- <xsd:element name="City" type="xsd:string"/>
- </xsd:sequence>
- </xsd:complexType>
- </xsd:element>
- </xsd:sequence>
- <xsd:attribute name="ProductID" type="xsd:int" use="required"/>
- <xsd:attribute name="Category" type="xsd:string"/>
- </xsd:complexType>
- </xsd:element>
+    <xsd:element name="Product">
+        <xsd:complexType>
+            <xsd:sequence>
+            <xsd:element name="ProductName" type="xsd:string"/>
+            <xsd:element name="ProductType" type="xsd:string"/>
+            <xsd:element name="Price" type="xsd:decimal"/>
+            <xsd:element name="Class" type="xsd:string"/>
+            <xsd:element name="Company" type="xsd:string"/>
+            <xsd:element name="Provider" minOccurs="0" maxOccurs="3">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Name" type="xsd:string"/>
+                        <xsd:element name="City" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            </xsd:sequence>
+        <xsd:attribute name="ProductID" type="xsd:int" use="required"/>
+        <xsd:attribute name="Category" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
 </xsd:schema>
