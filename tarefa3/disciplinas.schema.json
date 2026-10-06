@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Disciplinas",
+  "description": "Disciplinas de um curso, com docentes e horas das componentes teorica e pratica",
+  "type": "object",
+  "properties": {
+    "curso": { "type": "string" },
+    "disciplinas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "codigo": { "type": "string" },
+          "nome": { "type": "string" },
+          "ano": { "type": "integer" },
+          "teorica": {
+            "type": "object",
+            "properties": {
+              "horas": { "type": "integer" },
+              "nome": { "type": "string" }
+            },
+            "required": ["horas", "nome"]
+          },
+          "pratica": {
+            "type": "object",
+            "properties": {
+              "horas": { "type": "integer" },
+              "nome": { "type": "string" }
+            },
+            "required": ["horas", "nome"]
+          }
+        },
+        "required": ["codigo", "nome", "teorica"]
+      },
+      "minItems": 1,
+      "maxItems": 10
+    }
+  },
+  "required": ["curso", "disciplinas"]
+}
