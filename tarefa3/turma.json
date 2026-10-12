@@ -1,0 +1,14 @@
+{
+  "disciplina": "Aplicacoes para a Internet III",
+  "codigo": "12A",
+  "totalAlunos": 20,
+  "docenteTeorica": "Ana Marques",
+  "numeroInscritosTp1": 12,
+  "docenteTp1": "Rui Tavares",
+  "numeroInscritosTp2": 8,
+  "docenteTp2": "Carla Mendes",
+  "data": "09-10-2026",
+  "cursos": ["tdm", "ei"],
+  "contacto": 232480500,
+  "planoAno1": ["ADM1", "API1", "BD1"]
+}

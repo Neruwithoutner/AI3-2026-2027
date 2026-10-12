@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Turma",
+  "description": "Turma de uma disciplina, com turnos praticos, data, cursos e plano do 1.o ano",
+  "type": "object",
+  "properties": {
+    "disciplina": {
+      "type": "string",
+      "pattern": "^Aplicacoes .+"
+    },
+    "codigo": {
+      "type": "string",
+      "enum": ["12A", "13A", "14A", "34A", "40A"]
+    },
+    "totalAlunos": {
+      "type": "integer",
+      "minimum": 16,
+      "maximum": 24
+    },
+    "docenteTeorica": {
+      "type": "string",
+      "pattern": "^[A-Z][a-z]+ [A-Z][a-z]+",
+      "minLength": 5,
+      "maxLength": 40
+    },
+    "numeroInscritosTp1": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "docenteTp1": {
+      "type": "string",
+      "pattern": "^[A-Z][a-z]+ [A-Z][a-z]+",
+      "minLength": 5,
+      "maxLength": 40
+    },
+    "numeroInscritosTp2": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "docenteTp2": {
+      "type": "string",
+      "pattern": "^[A-Z][a-z]+ [A-Z][a-z]+",
+      "minLength": 5,
+      "maxLength": 40
+    },
+    "data": {
+      "type": "string",
+      "enum": ["08-10-2026", "09-10-2026", "18-11-2026"]
+    },
+    "cursos": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["tdm", "ei", "msti", "rsi"]
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "contacto": {
+      "oneOf": [
+        { "type": "integer", "minimum": 200000000, "maximum": 999999999 },
+        { "type": "string", "enum": ["naoAplicavel"] }
+      ]
+    },
+    "planoAno1": {
+      "type": "array",
+      "oneOf": [
+        {
+          "items": { "type": "string", "enum": ["ADM1", "API1", "BD1"] }
+        },
+        {
+          "items": { "type": "string", "enum": ["ID1", "SI1", "SD1"] }
+        }
+      ]
+    }
+  },
+  "required": ["disciplina", "codigo", "data"],
+  "dependencies": {
+    "numeroInscritosTp1": ["docenteTp1"],
+    "numeroInscritosTp2": ["docenteTp2"]
+  }
+}

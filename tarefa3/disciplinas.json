@@ -1,0 +1,27 @@
+{
+  "curso": "TDM",
+  "disciplinas": [
+    {
+      "codigo": "12A",
+      "nome": "Aplicacoes para a Internet III",
+      "ano": 2,
+      "teorica": {
+        "horas": 2,
+        "nome": "Ana Marques"
+      },
+      "pratica": {
+        "horas": 3,
+        "nome": "Rui Tavares"
+      }
+    },
+    {
+      "codigo": "34A",
+      "nome": "Bases de Dados",
+      "ano": 1,
+      "teorica": {
+        "horas": 2,
+        "nome": "Carla Mendes"
+      }
+    }
+  ]
+}
