@@ -1,4 +1,4 @@
-## Ponto 14 · Reflexão crítica (esboço, a reescrever por palavras tuas)
+## Ponto 14 · Reflexão crítica
 
 - **Atributo vs. elemento.** Perde-se a marca de origem, mas não o dado. Importa a quem precisa de converter de volta para XML ou de preservar a semântica original; a quem só consome os valores, pouco ou nada.
 - **Ordem.** Para o programa leitor é sobretudo uma vantagem: acede-se por nome, não por posição, e produtores diferentes podem escrever em ordens diferentes. A fraqueza é que, se a ordem tivesse significado, o schema não o protege.
