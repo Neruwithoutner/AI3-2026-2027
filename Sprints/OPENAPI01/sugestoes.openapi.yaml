@@ -1,0 +1,597 @@
+openapi: 3.0.3
+info:
+  title: API de Sugestões dos Alunos
+  version: 1.0.0
+  description: API para os alunos submeterem sugestões, os serviços acompanharem o seu tratamento e qualquer pessoa consultar estatísticas de resolução.
+servers:
+  - url: https://api.estgv.exemplo/v1
+
+paths:
+  /sugestoes:
+    get:
+      operationId: listarSugestoes
+      summary: Listar sugestões, com filtros e paginação
+      parameters:
+        - name: estado
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Estado'
+        - name: categoria
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/CodigoCategoria'
+        - name: pagina
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: tamanhoPagina
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+      responses:
+        '200':
+          description: Página de sugestões que cumprem os filtros
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlPrivadoRevalidar'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaSugestoes'
+        '400':
+          $ref: '#/components/responses/Erro400'
+        default:
+          $ref: '#/components/responses/ErroPadrao'
+    post:
+      operationId: criarSugestao
+      summary: Submeter uma sugestão
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SugestaoNova'
+      responses:
+        '201':
+          description: Sugestão criada no estado submetida
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlNoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sugestao'
+        '400':
+          $ref: '#/components/responses/Erro400'
+        default:
+          $ref: '#/components/responses/ErroPadrao'
+
+  /sugestoes/{id}:
+    get:
+      operationId: obterSugestao
+      summary: Obter uma sugestão
+      parameters:
+        - $ref: '#/components/parameters/IdSugestao'
+        - name: If-None-Match
+          in: header
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A sugestão pedida
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlPrivadoRevalidar'
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sugestao'
+              example:
+                id: 42
+                titulo: Mais tomadas na biblioteca
+                descricao: Faltam tomadas junto às mesas de estudo do primeiro piso.
+                categoria: instalacoes
+                numeroAluno: '20261234'
+                estado: aceite
+                dataCriacao: '2026-10-01T09:15:00Z'
+                dataAtualizacao: '2026-10-08T14:30:00Z'
+                dataResolucao: null
+        '304':
+          description: A cópia que o cliente tem continua válida
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlPrivadoRevalidar'
+            ETag:
+              $ref: '#/components/headers/ETag'
+        '404':
+          $ref: '#/components/responses/Erro404'
+        default:
+          $ref: '#/components/responses/ErroPadrao'
+    put:
+      operationId: substituirSugestao
+      summary: Editar uma sugestão ainda submetida
+      parameters:
+        - $ref: '#/components/parameters/IdSugestao'
+        - name: If-Match
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SugestaoNova'
+      responses:
+        '200':
+          description: Sugestão substituída
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlNoStore'
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sugestao'
+        '400':
+          $ref: '#/components/responses/Erro400'
+        '404':
+          $ref: '#/components/responses/Erro404'
+        '409':
+          $ref: '#/components/responses/ConflitoNaoSubmetida'
+        '412':
+          $ref: '#/components/responses/Erro412'
+        default:
+          $ref: '#/components/responses/ErroPadrao'
+    delete:
+      operationId: retirarSugestao
+      summary: Retirar uma sugestão ainda submetida
+      parameters:
+        - $ref: '#/components/parameters/IdSugestao'
+      responses:
+        '204':
+          description: Sugestão retirada
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlNoStore'
+        '404':
+          $ref: '#/components/responses/Erro404'
+        '409':
+          $ref: '#/components/responses/ConflitoNaoSubmetida'
+        default:
+          $ref: '#/components/responses/ErroPadrao'
+
+  /sugestoes/{id}/acompanhamentos:
+    get:
+      operationId: listarAcompanhamentos
+      summary: Histórico de acompanhamento, do mais antigo para o mais recente
+      parameters:
+        - $ref: '#/components/parameters/IdSugestao'
+      responses:
+        '200':
+          description: Acompanhamentos da sugestão, do mais antigo para o mais recente
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlPrivadoRevalidar'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acompanhamento'
+        '404':
+          $ref: '#/components/responses/Erro404'
+        default:
+          $ref: '#/components/responses/ErroPadrao'
+    post:
+      operationId: registarAcompanhamento
+      summary: Registar uma mudança de estado
+      parameters:
+        - $ref: '#/components/parameters/IdSugestao'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcompanhamentoNovo'
+      responses:
+        '201':
+          description: Acompanhamento registado e estado da sugestão alterado
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlNoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Acompanhamento'
+        '400':
+          $ref: '#/components/responses/Erro400'
+        '404':
+          $ref: '#/components/responses/Erro404'
+        '409':
+          $ref: '#/components/responses/ConflitoTransicao'
+        default:
+          $ref: '#/components/responses/ErroPadrao'
+
+  /estatisticas/resolucao:
+    get:
+      operationId: obterEstatisticasResolucao
+      summary: Totais por estado, taxa e tempo médio de resolução
+      parameters:
+        - $ref: '#/components/parameters/AnoLetivo'
+      responses:
+        '200':
+          description: Estatísticas de resolução do ano letivo pedido
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlPublicHora'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstatisticasResolucao'
+              example:
+                anoLetivo: 2026-2027
+                totalSugestoes: 60
+                porEstado:
+                  submetida: 8
+                  em_analise: 10
+                  aceite: 12
+                  rejeitada: 9
+                  resolvida: 21
+                taxaResolucao: 0.35
+                tempoMedioResolucaoDias: 18.5
+        '400':
+          $ref: '#/components/responses/Erro400'
+        default:
+          $ref: '#/components/responses/ErroPadrao'
+
+  /estatisticas/categorias:
+    get:
+      operationId: obterEstatisticasCategorias
+      summary: Os mesmos indicadores, por categoria
+      parameters:
+        - $ref: '#/components/parameters/AnoLetivo'
+      responses:
+        '200':
+          description: Estatísticas por categoria do ano letivo pedido
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlPublicHora'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstatisticasCategorias'
+        '400':
+          $ref: '#/components/responses/Erro400'
+        default:
+          $ref: '#/components/responses/ErroPadrao'
+
+  /categorias:
+    get:
+      operationId: listarCategorias
+      summary: Listar as categorias e a sua descrição
+      responses:
+        '200':
+          description: As cinco categorias com a sua descrição
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlPublicDia'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Categoria'
+        default:
+          $ref: '#/components/responses/ErroPadrao'
+
+components:
+  parameters:
+    IdSugestao:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+    AnoLetivo:
+      name: anoLetivo
+      in: query
+      required: true
+      schema:
+        type: string
+        pattern: '^[0-9]{4}-[0-9]{4}$'
+
+  headers:
+    CacheControlPublicDia:
+      schema:
+        type: string
+        enum: ['public, max-age=86400']
+    CacheControlPublicHora:
+      schema:
+        type: string
+        enum: ['public, max-age=3600']
+    CacheControlPrivadoRevalidar:
+      schema:
+        type: string
+        enum: ['private, no-cache']
+    CacheControlNoStore:
+      schema:
+        type: string
+        enum: ['no-store']
+    ETag:
+      schema:
+        type: string
+    Location:
+      schema:
+        type: string
+
+  responses:
+    Erro400:
+      description: Pedido mal formado ou dados que não cumprem o schema
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControlNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Erro'
+    Erro404:
+      description: Não existe sugestão com esse id
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControlNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Erro'
+    ConflitoNaoSubmetida:
+      description: A sugestão já não está no estado submetida, e só nesse estado pode ser editada ou retirada
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControlNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Erro'
+    ConflitoTransicao:
+      description: A transição para o novo estado não é permitida a partir do estado atual (só submetida para em_analise, em_analise para aceite ou rejeitada, aceite para resolvida; rejeitada e resolvida estão fechadas)
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControlNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Erro'
+    Erro412:
+      description: A condição If-Match falhou, porque a sugestão foi alterada desde que o cliente a leu
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControlNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Erro'
+    ErroPadrao:
+      description: Qualquer outro erro, por exemplo um erro interno do servidor (500)
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControlNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Erro'
+
+  schemas:
+    Estado:
+      type: string
+      enum: [submetida, em_analise, aceite, rejeitada, resolvida]
+    CodigoCategoria:
+      type: string
+      enum: [instalacoes, ensino, servicos, atividades, outra]
+    Categoria:
+      type: object
+      required: [codigo, descricao]
+      properties:
+        codigo:
+          $ref: '#/components/schemas/CodigoCategoria'
+        descricao:
+          type: string
+          minLength: 3
+          maxLength: 80
+    SugestaoNova:
+      type: object
+      required: [titulo, descricao, categoria, numeroAluno]
+      properties:
+        titulo:
+          type: string
+          minLength: 10
+          maxLength: 120
+        descricao:
+          type: string
+          minLength: 20
+          maxLength: 2000
+        categoria:
+          $ref: '#/components/schemas/CodigoCategoria'
+        numeroAluno:
+          type: string
+          pattern: '^[0-9]{5,8}$'
+    Sugestao:
+      allOf:
+        - $ref: '#/components/schemas/SugestaoNova'
+        - type: object
+          required: [id, estado, dataCriacao, dataAtualizacao, dataResolucao]
+          properties:
+            id:
+              type: integer
+              minimum: 1
+              readOnly: true
+            estado:
+              readOnly: true
+              allOf:
+                - $ref: '#/components/schemas/Estado'
+            dataCriacao:
+              type: string
+              format: date-time
+              readOnly: true
+            dataAtualizacao:
+              type: string
+              format: date-time
+              readOnly: true
+            dataResolucao:
+              type: string
+              format: date-time
+              nullable: true
+              readOnly: true
+    AcompanhamentoNovo:
+      type: object
+      required: [novoEstado, nota, responsavel]
+      properties:
+        novoEstado:
+          $ref: '#/components/schemas/Estado'
+        nota:
+          type: string
+          minLength: 5
+          maxLength: 500
+        responsavel:
+          type: string
+          minLength: 5
+          maxLength: 60
+          pattern: '^[A-Z][a-z]+ [A-Z][a-z]+$'
+    Acompanhamento:
+      allOf:
+        - $ref: '#/components/schemas/AcompanhamentoNovo'
+        - type: object
+          required: [id, estadoAnterior, data]
+          properties:
+            id:
+              type: integer
+              minimum: 1
+              readOnly: true
+            estadoAnterior:
+              readOnly: true
+              allOf:
+                - $ref: '#/components/schemas/Estado'
+            data:
+              type: string
+              format: date-time
+              readOnly: true
+    ListaSugestoes:
+      type: object
+      required: [pagina, tamanhoPagina, total, itens]
+      properties:
+        pagina:
+          type: integer
+          minimum: 1
+        tamanhoPagina:
+          type: integer
+          minimum: 1
+          maximum: 50
+        total:
+          type: integer
+          minimum: 0
+        itens:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/Sugestao'
+    EstatisticasResolucao:
+      type: object
+      required: [anoLetivo, totalSugestoes, porEstado, taxaResolucao, tempoMedioResolucaoDias]
+      properties:
+        anoLetivo:
+          type: string
+          pattern: '^[0-9]{4}-[0-9]{4}$'
+        totalSugestoes:
+          type: integer
+          minimum: 0
+        porEstado:
+          type: object
+          required: [submetida, em_analise, aceite, rejeitada, resolvida]
+          properties:
+            submetida:
+              type: integer
+              minimum: 0
+            em_analise:
+              type: integer
+              minimum: 0
+            aceite:
+              type: integer
+              minimum: 0
+            rejeitada:
+              type: integer
+              minimum: 0
+            resolvida:
+              type: integer
+              minimum: 0
+        taxaResolucao:
+          type: number
+          minimum: 0
+          maximum: 1
+        tempoMedioResolucaoDias:
+          type: number
+          minimum: 0
+          nullable: true
+    EstatisticasCategorias:
+      type: object
+      required: [anoLetivo, categorias]
+      properties:
+        anoLetivo:
+          type: string
+          pattern: '^[0-9]{4}-[0-9]{4}$'
+        categorias:
+          type: array
+          minItems: 1
+          maxItems: 5
+          items:
+            type: object
+            required: [categoria, total, resolvidas, taxaResolucao]
+            properties:
+              categoria:
+                $ref: '#/components/schemas/CodigoCategoria'
+              total:
+                type: integer
+                minimum: 0
+              resolvidas:
+                type: integer
+                minimum: 0
+              taxaResolucao:
+                type: number
+                minimum: 0
+                maximum: 1
+    Erro:
+      type: object
+      required: [codigo, mensagem]
+      properties:
+        codigo:
+          type: integer
+          minimum: 400
+          maximum: 599
+        mensagem:
+          type: string
+          minLength: 1
+          maxLength: 200
+        detalhes:
+          type: array
+          items:
+            type: object
+            required: [campo, problema]
+            properties:
+              campo:
+                type: string
+              problema:
+                type: string
