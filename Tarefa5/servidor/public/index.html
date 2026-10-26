@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sugestões dos Alunos</title>
+  <link rel="stylesheet" href="estilos.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Sugestões dos Alunos</h1>
+
+    <div id="mensagens" class="mensagens" role="alert"></div>
+
+    <section id="entrada" aria-labelledby="titulo-entrada">
+      <h2 id="titulo-entrada">Entrar</h2>
+      <form id="formulario-entrada" novalidate>
+        <label for="utilizador">Utilizador</label>
+        <input id="utilizador" name="utilizador" type="text" autocomplete="username" spellcheck="false" autocapitalize="none">
+
+        <label for="palavraPasse">Palavra-passe</label>
+        <input id="palavraPasse" name="palavraPasse" type="password" autocomplete="current-password">
+
+        <button type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <section id="sessao" aria-labelledby="titulo-sessao" hidden>
+      <h2 id="titulo-sessao">Sessão</h2>
+      <dl class="dados-sessao">
+        <dt>Nome</dt>
+        <dd id="sessao-nome"></dd>
+        <dt>Papel</dt>
+        <dd id="sessao-papel"></dd>
+        <dt>Expira às</dt>
+        <dd id="sessao-expiracao"></dd>
+        <dt>Tempo restante</dt>
+        <dd id="sessao-restante"></dd>
+      </dl>
+
+      <button id="botao-sugestoes" type="button">As minhas sugestões</button>
+
+      <ul id="lista-sugestoes" class="lista-sugestoes"></ul>
+
+      <button id="botao-sair" type="button" class="secundario">Terminar sessão</button>
+    </section>
+  </main>
+</body>
+</html>

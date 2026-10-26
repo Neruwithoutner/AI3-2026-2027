@@ -1,0 +1,198 @@
+:root {
+  --fundo: #f6f7f9;
+  --superficie: #ffffff;
+  --texto: #1d2128;
+  --texto-suave: #5a6270;
+  --borda: #cfd5de;
+  --primaria: #1f5fbf;
+  --primaria-texto: #ffffff;
+  --foco: #e8a400;
+  --erro: #a3201a;
+  --erro-fundo: #fdecea;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fundo: #15181d;
+    --superficie: #1f242b;
+    --texto: #e8ebf0;
+    --texto-suave: #a7afbc;
+    --borda: #3a424e;
+    --primaria: #6aa4ff;
+    --primaria-texto: #0d1420;
+    --foco: #ffc940;
+    --erro: #ff9b94;
+    --erro-fundo: #3a1c1a;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font: 1rem/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 1rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin: 0 0 1rem;
+}
+
+section {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+form {
+  display: grid;
+  gap: 0.35rem;
+}
+
+label {
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  background: var(--superficie);
+  color: var(--texto);
+  font: inherit;
+}
+
+button {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--primaria);
+  border-radius: 6px;
+  background: var(--primaria);
+  color: var(--primaria-texto);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+form button {
+  margin-top: 1rem;
+}
+
+button.secundario {
+  background: transparent;
+  color: var(--primaria);
+  margin-top: 1rem;
+}
+
+/* Foco sempre visível, com contorno que não depende só da cor de fundo. */
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+/* Mensagens de erro: texto «Erro:», borda grossa e negrito, não apenas a cor. */
+.mensagens:empty {
+  display: none;
+}
+
+.mensagens {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+}
+
+.mensagens.erro {
+  border: 2px solid var(--erro);
+  border-left-width: 8px;
+  background: var(--erro-fundo);
+  color: var(--erro);
+  font-weight: 700;
+}
+
+.dados-sessao {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+  margin: 0 0 1rem;
+}
+
+.dados-sessao dt {
+  color: var(--texto-suave);
+}
+
+.dados-sessao dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+#sessao-restante {
+  font-variant-numeric: tabular-nums;
+}
+
+.lista-sugestoes {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.lista-sugestoes li {
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  padding: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.lista-sugestoes strong {
+  display: block;
+}
+
+.lista-sugestoes .detalhes {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 400px) {
+  main {
+    padding: 1rem 0.75rem 2rem;
+  }
+
+  .dados-sessao {
+    grid-template-columns: 1fr;
+  }
+
+  .dados-sessao dd {
+    margin-bottom: 0.5rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}
