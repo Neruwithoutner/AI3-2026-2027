@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "titulo": "Mais tomadas na biblioteca",
+    "descricao": "Faltam tomadas junto às mesas de estudo do primeiro piso.",
+    "categoria": "instalacoes",
+    "numeroAluno": "12345",
+    "estado": "aceite",
+    "dataCriacao": "2026-10-01T09:15:00Z",
+    "dataAtualizacao": "2026-10-08T14:30:00Z",
+    "dataResolucao": null
+  },
+  {
+    "id": 2,
+    "titulo": "Horário alargado da cantina",
+    "descricao": "Abrir a cantina até às 21h00 nos dias com aulas em horário pós-laboral.",
+    "categoria": "servicos",
+    "numeroAluno": "12345",
+    "estado": "submetida",
+    "dataCriacao": "2026-10-20T11:02:00Z",
+    "dataAtualizacao": "2026-10-20T11:02:00Z",
+    "dataResolucao": null
+  },
+  {
+    "id": 3,
+    "titulo": "Workshop de motion graphics",
+    "descricao": "Organizar um workshop prático de motion graphics aberto a todos os cursos.",
+    "categoria": "atividades",
+    "numeroAluno": "67890",
+    "estado": "em_analise",
+    "dataCriacao": "2026-10-12T15:40:00Z",
+    "dataAtualizacao": "2026-10-14T10:05:00Z",
+    "dataResolucao": null
+  },
+  {
+    "id": 4,
+    "titulo": "Reparar o projetor da sala 2.04",
+    "descricao": "O projetor da sala 2.04 desliga-se sozinho ao fim de poucos minutos de aula.",
+    "categoria": "instalacoes",
+    "numeroAluno": "54321",
+    "estado": "resolvida",
+    "dataCriacao": "2026-09-22T08:30:00Z",
+    "dataAtualizacao": "2026-10-03T16:45:00Z",
+    "dataResolucao": "2026-10-03T16:45:00Z"
+  }
+]
