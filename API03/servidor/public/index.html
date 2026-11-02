@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt" data-tema="claro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sugestões dos Alunos</title>
+  <link rel="stylesheet" href="estilos.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Sugestões dos Alunos</h1>
+
+    <div id="mensagens" class="mensagens" role="alert"></div>
+    <div id="estado" class="estado" role="status"></div>
+
+    <section id="configuracoes" aria-labelledby="titulo-configuracoes">
+      <h2 id="titulo-configuracoes">Configurações</h2>
+      <div class="opcoes">
+        <label for="opcao-tema">Tema</label>
+        <select id="opcao-tema">
+          <option value="claro">Claro</option>
+          <option value="escuro">Escuro</option>
+        </select>
+
+        <label for="opcao-ordenacao">Ordenação das sugestões</label>
+        <select id="opcao-ordenacao">
+          <option value="recentes">Mais recentes primeiro</option>
+          <option value="estado">Por estado</option>
+        </select>
+      </div>
+    </section>
+
+    <p id="a-verificar" class="a-verificar">A verificar a sessão…</p>
+
+    <section id="entrada" aria-labelledby="titulo-entrada" hidden>
+      <h2 id="titulo-entrada">Entrar</h2>
+      <form id="formulario-entrada" method="post" novalidate>
+        <label for="utilizador">Utilizador</label>
+        <input id="utilizador" name="utilizador" type="text" autocomplete="username" spellcheck="false" autocapitalize="none">
+
+        <label for="palavraPasse">Palavra-passe</label>
+        <input id="palavraPasse" name="palavraPasse" type="password" autocomplete="current-password">
+
+        <button type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <section id="sessao" aria-labelledby="titulo-sessao" hidden>
+      <h2 id="titulo-sessao">Sessão</h2>
+      <dl class="dados-sessao">
+        <dt>Nome</dt>
+        <dd id="sessao-nome"></dd>
+        <dt>Papel</dt>
+        <dd id="sessao-papel"></dd>
+        <dt>Expira às</dt>
+        <dd id="sessao-expiracao"></dd>
+        <dt>Tempo restante</dt>
+        <dd id="sessao-restante"></dd>
+      </dl>
+
+      <section id="nova-sugestao" class="subsecao" aria-labelledby="titulo-nova" hidden>
+        <h3 id="titulo-nova">Nova sugestão</h3>
+        <form id="formulario-sugestao" method="post" novalidate>
+          <label for="sugestao-titulo">Título <span class="ajuda">(10 a 120 caracteres)</span></label>
+          <input id="sugestao-titulo" name="titulo" type="text" maxlength="120">
+
+          <label for="sugestao-descricao">Descrição <span class="ajuda">(20 a 2000 caracteres)</span></label>
+          <textarea id="sugestao-descricao" name="descricao" rows="4" maxlength="2000"></textarea>
+
+          <label for="sugestao-categoria">Categoria</label>
+          <select id="sugestao-categoria" name="categoria">
+            <option value="">Escolher…</option>
+            <option value="instalacoes">Instalações</option>
+            <option value="ensino">Ensino</option>
+            <option value="servicos">Serviços</option>
+            <option value="atividades">Atividades</option>
+            <option value="outra">Outra</option>
+          </select>
+
+          <button type="submit">Submeter sugestão</button>
+        </form>
+      </section>
+
+      <button id="botao-sugestoes" type="button">As minhas sugestões</button>
+
+      <ul id="lista-sugestoes" class="lista-sugestoes"></ul>
+
+      <button id="botao-sair" type="button" class="secundario">Terminar sessão</button>
+    </section>
+  </main>
+</body>
+</html>
