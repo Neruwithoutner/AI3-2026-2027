@@ -1,0 +1,492 @@
+:root {
+  --fundo: #f6f7f9;
+  --superficie: #ffffff;
+  --texto: #1d2128;
+  --texto-suave: #5a6270;
+  --borda: #cfd5de;
+  --primaria: #1f5fbf;
+  --primaria-texto: #ffffff;
+  --foco: #e8a400;
+  --erro: #a3201a;
+  --erro-fundo: #fdecea;
+  --sucesso: #1d6b35;
+  --sucesso-fundo: #e7f5ec;
+  color-scheme: light;
+}
+
+/* Tema escolhido nas Configurações (guardado no localStorage). */
+:root[data-tema="escuro"] {
+  --fundo: #15181d;
+  --superficie: #1f242b;
+  --texto: #e8ebf0;
+  --texto-suave: #a7afbc;
+  --borda: #3a424e;
+  --primaria: #6aa4ff;
+  --primaria-texto: #0d1420;
+  --foco: #ffc940;
+  --erro: #ff9b94;
+  --erro-fundo: #3a1c1a;
+  --sucesso: #7fd69a;
+  --sucesso-fundo: #17301f;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font: 1rem/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 1rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin: 0 0 1rem;
+}
+
+section {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+form {
+  display: grid;
+  gap: 0.35rem;
+}
+
+label {
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  background: var(--superficie);
+  color: var(--texto);
+  font: inherit;
+}
+
+button {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--primaria);
+  border-radius: 6px;
+  background: var(--primaria);
+  color: var(--primaria-texto);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+form button {
+  margin-top: 1rem;
+}
+
+button.secundario {
+  background: transparent;
+  color: var(--primaria);
+  margin-top: 1rem;
+}
+
+/* Foco sempre visível, com contorno que não depende só da cor de fundo. */
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+/* Mensagens de erro: texto «Erro:», borda grossa e negrito, não apenas a cor. */
+.mensagens:empty {
+  display: none;
+}
+
+.mensagens {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+}
+
+.mensagens.erro {
+  border: 2px solid var(--erro);
+  border-left-width: 8px;
+  background: var(--erro-fundo);
+  color: var(--erro);
+  font-weight: 700;
+}
+
+.dados-sessao {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+  margin: 0 0 1rem;
+}
+
+.dados-sessao dt {
+  color: var(--texto-suave);
+}
+
+.dados-sessao dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+#sessao-restante {
+  font-variant-numeric: tabular-nums;
+}
+
+.lista-sugestoes {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.lista-sugestoes li {
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  padding: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.lista-sugestoes strong {
+  display: block;
+}
+
+.lista-sugestoes .detalhes {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 400px) {
+  main {
+    padding: 1rem 0.75rem 2rem;
+  }
+
+  .dados-sessao {
+    grid-template-columns: 1fr;
+  }
+
+  .dados-sessao dd {
+    margin-bottom: 0.5rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+/* --- API03: configurações, rascunho e mensagens de estado --- */
+
+main > section + section,
+main > p + section {
+  margin-top: 1rem;
+}
+
+#configuracoes h2 {
+  margin-bottom: 0.5rem;
+}
+
+.opcoes {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1rem;
+  align-items: center;
+}
+
+.opcoes label {
+  margin-top: 0;
+}
+
+select,
+textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  background: var(--superficie);
+  color: var(--texto);
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.subsecao {
+  border-style: dashed;
+  margin: 0 0 1rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+  margin: 0 0 0.5rem;
+}
+
+.ajuda {
+  font-weight: 400;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+.a-verificar {
+  color: var(--texto-suave);
+}
+
+/* Mensagens de sucesso: texto «Feito:», borda e negrito, não apenas a cor. */
+.estado:empty {
+  display: none;
+}
+
+.estado {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--sucesso);
+  border-left-width: 8px;
+  border-radius: 6px;
+  background: var(--sucesso-fundo);
+  color: var(--sucesso);
+  font-weight: 700;
+}
+
+@media (max-width: 400px) {
+  .opcoes {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- API04: estados, ligação, atualização, pendentes --- */
+
+:root {
+  --aviso: #8a5a00;
+  --aviso-fundo: #fff4dc;
+}
+
+:root[data-tema="escuro"] {
+  --aviso: #ffd27a;
+  --aviso-fundo: #3a2e14;
+}
+
+.ligacao {
+  margin: 0 0 1rem;
+  color: var(--texto-suave);
+  font-size: 0.95rem;
+}
+
+.ligacao::before {
+  content: "● ";
+}
+
+body[data-estado="sem-ligacao"] .ligacao {
+  color: var(--aviso);
+  font-weight: 700;
+}
+
+body[data-estado="sem-ligacao"] .ligacao::before {
+  content: "○ ";
+}
+
+.atualizacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--primaria);
+  border-radius: 6px;
+  background: var(--superficie);
+}
+
+.atualizacao p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.area {
+  margin-top: 1rem;
+}
+
+.aviso-ligacao {
+  border: 2px solid var(--aviso);
+  border-left-width: 8px;
+  background: var(--aviso-fundo);
+}
+
+.aviso-ligacao h2 {
+  color: var(--aviso);
+}
+
+.aviso-ligacao h2::before {
+  content: "Aviso: ";
+}
+
+.copia-local {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--borda);
+}
+
+.copia-local p {
+  margin: 0 0 0.25rem;
+}
+
+.copia-hora {
+  font-weight: 700;
+}
+
+.explicacao {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+fieldset button {
+  margin-top: 1rem;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.cabecalho-lista {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.cabecalho-lista h3 {
+  margin: 0;
+}
+
+.cabecalho-lista button.secundario {
+  margin-top: 0;
+}
+
+.lista-info {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  margin: 0.25rem 0 0;
+}
+
+.lista-info:empty {
+  display: none;
+}
+
+#lista-pendentes:empty {
+  display: none;
+}
+
+.lista-sugestoes li.pendente {
+  border-style: dashed;
+  border-color: var(--aviso);
+}
+
+.etiqueta {
+  display: inline-block;
+  margin: 0.25rem 0;
+  padding: 0 0.4rem;
+  border: 1px solid var(--aviso);
+  border-radius: 4px;
+  color: var(--aviso);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.pendente.com-erro .etiqueta {
+  border-color: var(--erro);
+  color: var(--erro);
+}
+
+.lista-sugestoes li .detalhes {
+  display: block;
+}
+
+button.pequeno {
+  min-height: 2.25rem;
+  padding: 0.25rem 0.75rem;
+  margin-top: 0.5rem;
+  width: auto;
+}
+
+dialog {
+  max-width: min(28rem, calc(100vw - 2rem));
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+  padding: 1.25rem;
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}
+
+dialog .acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+dialog .acoes button {
+  margin-top: 0;
+  width: auto;
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+h2[tabindex="-1"]:focus {
+  outline: none;
+}
+
+h2[tabindex="-1"]:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
