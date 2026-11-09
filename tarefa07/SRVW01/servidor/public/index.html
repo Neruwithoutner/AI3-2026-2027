@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt" data-tema="claro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sugestões dos Alunos</title>
+  <link rel="stylesheet" href="estilos.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body data-estado="a-verificar">
+  <main>
+    <h1>Sugestões dos Alunos</h1>
+
+    <!-- Estado da ligação (anunciado pelos leitores de ecrã sem interromper) -->
+    <p id="ligacao" class="ligacao" aria-live="polite"></p>
+
+    <div id="mensagens" class="mensagens" role="alert"></div>
+    <div id="estado" class="estado" role="status"></div>
+
+    <div id="atualizacao" class="atualizacao" hidden>
+      <p>Há uma nova versão da aplicação.</p>
+      <button id="botao-atualizar" type="button">Atualizar a aplicação</button>
+    </div>
+
+    <section id="configuracoes" aria-labelledby="titulo-configuracoes">
+      <h2 id="titulo-configuracoes">Configurações</h2>
+      <div class="opcoes">
+        <label for="opcao-tema">Tema</label>
+        <select id="opcao-tema">
+          <option value="claro">Claro</option>
+          <option value="escuro">Escuro</option>
+        </select>
+
+        <label for="opcao-ordenacao">Ordenação das sugestões</label>
+        <select id="opcao-ordenacao">
+          <option value="recentes">Mais recentes primeiro</option>
+          <option value="estado">Por estado</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Estado a-verificar -->
+    <section id="area-a-verificar" data-area="a-verificar" class="area">
+      <p class="a-verificar">A verificar sessão…</p>
+    </section>
+
+    <!-- Estado sem-sessao -->
+    <section id="area-sem-sessao" data-area="sem-sessao" class="area" aria-labelledby="titulo-entrada" hidden>
+      <h2 id="titulo-entrada">Entrar</h2>
+      <form id="formulario-entrada" method="post" novalidate>
+        <label for="utilizador">Utilizador</label>
+        <input id="utilizador" name="utilizador" type="text" autocomplete="username" spellcheck="false" autocapitalize="none">
+
+        <label for="palavraPasse">Palavra-passe</label>
+        <input id="palavraPasse" name="palavraPasse" type="password" autocomplete="current-password">
+
+        <button id="botao-entrar" type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <!-- Estado com-sessao -->
+    <section id="area-com-sessao" data-area="com-sessao" class="area" aria-labelledby="titulo-sessao" hidden>
+      <h2 id="titulo-sessao" tabindex="-1">Sessão</h2>
+      <dl class="dados-sessao">
+        <dt>Nome</dt>
+        <dd id="sessao-nome"></dd>
+        <dt>Papel</dt>
+        <dd id="sessao-papel"></dd>
+        <dt>Expira às</dt>
+        <dd id="sessao-expiracao"></dd>
+        <dt>Tempo restante</dt>
+        <dd id="sessao-restante"></dd>
+      </dl>
+    </section>
+
+    <!-- Estado sem-ligacao -->
+    <section id="area-sem-ligacao" data-area="sem-ligacao" class="area aviso-ligacao" aria-labelledby="titulo-sem-ligacao" hidden>
+      <h2 id="titulo-sem-ligacao">Sem ligação</h2>
+      <p>Não foi possível contactar o servidor. Não se sabe se a sessão ainda é válida.</p>
+      <button id="botao-tentar" type="button" class="secundario">Tentar de novo</button>
+      <div id="copia-local" class="copia-local" hidden>
+        <p>Dados guardados de <strong id="copia-nome"></strong>.</p>
+        <p id="copia-hora" class="copia-hora"></p>
+      </div>
+    </section>
+
+    <!-- Lista e nova sugestão: em com-sessao e, com cópia local válida, em sem-ligacao -->
+    <section id="trabalho" class="area" aria-labelledby="titulo-lista" hidden>
+      <section id="nova-sugestao" class="subsecao" aria-labelledby="titulo-nova" hidden>
+        <h3 id="titulo-nova">Nova sugestão</h3>
+        <form id="formulario-sugestao" method="post">
+          <fieldset id="campos-sugestao">
+            <legend class="visualmente-oculto">Dados da sugestão</legend>
+            <label for="sugestao-titulo">Título <span class="ajuda">(10 a 120 caracteres)</span></label>
+            <input id="sugestao-titulo" name="titulo" type="text" required minlength="10" maxlength="120">
+
+            <label for="sugestao-descricao">Descrição <span class="ajuda">(20 a 2000 caracteres)</span></label>
+            <textarea id="sugestao-descricao" name="descricao" rows="4" required minlength="20" maxlength="2000"></textarea>
+
+            <label for="sugestao-categoria">Categoria</label>
+            <select id="sugestao-categoria" name="categoria" required>
+              <option value="">Escolher…</option>
+            </select>
+
+            <button type="submit">Submeter sugestão</button>
+          </fieldset>
+          <p id="sem-categorias" class="explicacao" hidden>
+            Não é possível criar sugestões: as categorias não foram obtidas do servidor nem estão guardadas neste browser.
+          </p>
+        </form>
+      </section>
+
+      <div class="cabecalho-lista">
+        <h3 id="titulo-lista">Sugestões</h3>
+        <button id="botao-atualizar-lista" type="button" class="secundario">Atualizar lista</button>
+      </div>
+      <p id="lista-info" class="lista-info"></p>
+      <ul id="lista-pendentes" class="lista-sugestoes" aria-label="Sugestões por enviar"></ul>
+      <ul id="lista-sugestoes" class="lista-sugestoes" aria-label="Sugestões"></ul>
+
+      <button id="botao-sair" type="button" class="secundario">Terminar sessão</button>
+      <p id="sair-explicacao" class="explicacao" hidden>
+        Sem ligação não é possível terminar a sessão: o cookie é HttpOnly e só o servidor o pode apagar.
+      </p>
+    </section>
+  </main>
+
+  <dialog id="dialogo-sair" aria-labelledby="dialogo-texto">
+    <form method="dialog">
+      <p id="dialogo-texto"></p>
+      <div class="acoes">
+        <button value="cancelar" class="secundario">Cancelar</button>
+        <button value="confirmar">Terminar sessão</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
