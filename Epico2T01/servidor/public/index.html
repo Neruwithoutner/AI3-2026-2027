@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reporta</title>
+  <meta name="description" content="Comunique um problema na via pública com fotografia e localização.">
+  <meta name="theme-color" content="#ea580c">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icones/icone-192.png">
+  <link rel="apple-touch-icon" href="/icones/icone-192.png">
+  <link rel="stylesheet" href="/estilos.css">
+  <!-- bd.js é um script clássico: é partilhado com o service worker (importScripts). -->
+  <script src="/bd.js"></script>
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topo">
+    <img src="/icones/icone-192.png" alt="" width="40" height="40">
+    <div>
+      <h1>Reporta</h1>
+      <p class="subtitulo">Problemas na via pública</p>
+    </div>
+    <p id="estado-ligacao" class="estado-ligacao" role="status" aria-live="polite">A verificar…</p>
+  </header>
+
+  <main>
+    <section class="cartao" aria-labelledby="titulo-comunicar">
+      <h2 id="titulo-comunicar">Comunicar um problema</h2>
+      <!-- Sprint 2: categoria, descrição, fotografia, localização e candidatas (formulario.js). -->
+      <form id="formulario" novalidate>
+        <p class="provisorio">Formulário por implementar (sprint 2).</p>
+      </form>
+    </section>
+
+    <section class="cartao" aria-labelledby="titulo-minhas">
+      <h2 id="titulo-minhas">As minhas comunicações</h2>
+      <p id="sincronizacao" class="sincronizacao" role="status" aria-live="polite"></p>
+      <!-- Sprint 2: pendentes, minhas e ocorrencias (IndexedDB). -->
+      <ul id="lista" class="lista">
+        <li class="provisorio">Ainda não há comunicações.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>Service worker: <span id="estado-sw">a registar…</span></p>
+  </footer>
+</body>
+</html>

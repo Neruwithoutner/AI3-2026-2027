@@ -1,0 +1,16 @@
+{
+  "name": "reporta-servidor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Reporta: servidor Express da API /v1 e da PWA (sprint 1: esqueleto)",
+  "main": "servidor.js",
+  "scripts": {
+    "start": "node --env-file=.env servidor.js"
+  },
+  "engines": {
+    "node": ">=20.6"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

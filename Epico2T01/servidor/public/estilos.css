@@ -1,0 +1,102 @@
+/* Reporta · estilos base (sprint 1) */
+:root {
+  --fundo: #fafaf9;
+  --superficie: #ffffff;
+  --texto: #1c1917;
+  --texto-suave: #57534e;
+  --linha: #e7e5e4;
+  --destaque: #ea580c;
+  --destaque-escuro: #c2410c;
+  --ok: #15803d;
+  --aviso: #b45309;
+  --raio: 12px;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fundo: #1c1917;
+    --superficie: #292524;
+    --texto: #fafaf9;
+    --texto-suave: #a8a29e;
+    --linha: #44403c;
+    --ok: #4ade80;
+    --aviso: #fbbf24;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  line-height: 1.5;
+}
+
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--superficie);
+  border-bottom: 1px solid var(--linha);
+  position: sticky;
+  top: 0;
+}
+.topo img { border-radius: 10px; }
+.topo h1 { margin: 0; font-size: 1.25rem; }
+.subtitulo { margin: 0; font-size: .85rem; color: var(--texto-suave); }
+
+.estado-ligacao {
+  margin: 0 0 0 auto;
+  font-size: .85rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--linha);
+}
+.estado-ligacao.com-rede { color: var(--ok); }
+.estado-ligacao.sem-rede { color: var(--aviso); }
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.cartao {
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  padding: 16px;
+}
+.cartao h2 { margin: 0 0 8px; font-size: 1.05rem; }
+
+.lista { list-style: none; margin: 0; padding: 0; }
+.provisorio { color: var(--texto-suave); font-style: italic; margin: 0; }
+.sincronizacao:empty { display: none; }
+
+.rodape {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px 24px;
+  font-size: .8rem;
+  color: var(--texto-suave);
+}
+
+button {
+  font: inherit;
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: var(--destaque);
+  color: #fff;
+  cursor: pointer;
+}
+button:hover { background: var(--destaque-escuro); }
+:focus-visible { outline: 3px solid var(--destaque); outline-offset: 2px; }
